@@ -7,7 +7,6 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.andrest.databaseimplementation.R
-import com.andrest.databaseimplementation.`interface`.UserClick
 import com.andrest.databaseimplementation.models.User
 
 
@@ -40,10 +39,6 @@ class UserListAdapter : RecyclerView.Adapter<UserListAdapter.ViewHolder>() {
         private val phone = view.findViewById<TextView>(R.id.phone)
         private val email = view.findViewById<TextView>(R.id.email)
         private val btn = view.findViewById<Button>(R.id.btn_view_post)
-
-        init {
-            //btn.setOnClickListener { listener.click(adapterPosition) }
-        }
 
         fun bind(currentUser: User) {
             name.text = currentUser.name
