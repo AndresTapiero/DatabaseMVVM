@@ -2,12 +2,11 @@ package com.andrest.databaseimplementation.viewModel
 
 import android.app.Application
 import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.viewModelScope
 import com.andrest.databaseimplementation.models.User
 import com.andrest.databaseimplementation.repository.UserRepository
-import kotlinx.coroutines.launch
 
 class UserViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -15,7 +14,6 @@ class UserViewModel(application: Application) : AndroidViewModel(application) {
     private var userRepo: UserRepository = UserRepository()
 
     init {
-        Log.i("Andres", " Melosooo entre al log 2")
         userData = userRepo.getUsers()
     }
 
@@ -25,6 +23,10 @@ class UserViewModel(application: Application) : AndroidViewModel(application) {
             userData = userRepo.getUsers()
         }
         return userData
+    }
+
+    fun onClick(user: User) {
+        Toast.makeText(getApplication(), "user ${user.id} ${user.name}", Toast.LENGTH_LONG).show()
     }
 
 
