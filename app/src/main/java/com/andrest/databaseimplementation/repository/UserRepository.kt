@@ -9,9 +9,11 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class UserRepository {
-
+class UserRepository() {
+    //private val userDao: UserDao
     val mutableLiveData: MutableLiveData<List<User>> = MutableLiveData()
+    val insertData: MutableLiveData<List<User>> = MutableLiveData()
+
     private val retrofit: Retrofit = Retrofit.Builder()
         .baseUrl("https://jsonplaceholder.typicode.com")
         .addConverterFactory(GsonConverterFactory.create())
@@ -33,6 +35,10 @@ class UserRepository {
             }
         })
         return mutableLiveData
+    }
+
+    fun addUsers(user: User) {
+
     }
 
 }

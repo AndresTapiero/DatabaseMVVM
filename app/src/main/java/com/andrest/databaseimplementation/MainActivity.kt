@@ -5,21 +5,30 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.andrest.databaseimplementation.Adapters.UserListAdapter
+import com.andrest.databaseimplementation.adapters.UserListAdapter
 import com.andrest.databaseimplementation.databinding.ActivityMainBinding
 import com.andrest.databaseimplementation.viewModel.UserViewModel
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var userViewModel: UserViewModel
+    private val app = applicationContext as UserApp
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         userViewModel = ViewModelProvider(this)[UserViewModel::class.java]
+
+
+        lifecycleScope.launch {
+            val users = app.room.userDao().getAll()
+            //Log.d("Andres", "onCreate: ${users.size}")
+        }
 
         val adapter = UserListAdapter {
             userViewModel.onClick(it)

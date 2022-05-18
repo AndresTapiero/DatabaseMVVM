@@ -1,4 +1,4 @@
-package com.andrest.databaseimplementation.Adapters
+package com.andrest.databaseimplementation.adapters
 
 import android.view.LayoutInflater
 import android.view.View

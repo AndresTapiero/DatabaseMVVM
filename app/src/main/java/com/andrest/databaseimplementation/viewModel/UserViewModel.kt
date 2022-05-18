@@ -12,8 +12,12 @@ class UserViewModel(application: Application) : AndroidViewModel(application) {
 
     var userData: LiveData<List<User>>
     private var userRepo: UserRepository = UserRepository()
+    //private var userRepo: UserRepository
 
     init {
+        // val userDao = UserDB.getDatabase(application).userDao()
+        Log.i("Andres", " Melosooo entre al log 2")
+        //userRepo = UserRepository(userDao)
         userData = userRepo.getUsers()
     }
 
