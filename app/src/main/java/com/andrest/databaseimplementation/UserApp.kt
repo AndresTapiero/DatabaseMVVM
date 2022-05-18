@@ -9,11 +9,7 @@ class UserApp : Application() {
     lateinit var room: UserDB
     override fun onCreate() {
         super.onCreate()
-        Log.e("Andres", "appli $applicationContext")
-
         room = UserDB.getDatabase(this)
-        /*     room = Room.databaseBuilder(applicationContext, UserDB::class.java, "user")
-                .build()*/
     }
 }
 
