@@ -2,17 +2,22 @@ package com.andrest.databaseimplementation.repository
 
 import androidx.lifecycle.MutableLiveData
 import com.andrest.databaseimplementation.api.APIService
+import com.andrest.databaseimplementation.dao.UserDao
+import com.andrest.databaseimplementation.db.UserDB
 import com.andrest.databaseimplementation.models.User
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import kotlin.coroutines.resume
+import kotlin.coroutines.suspendCoroutine
 
-class UserRepository() {
-    //private val userDao: UserDao
-    val mutableLiveData: MutableLiveData<List<User>> = MutableLiveData()
-    val insertData: MutableLiveData<List<User>> = MutableLiveData()
+class UserRepository(private val userDao: UserDao, private val userDB: UserDB) {
+    private val mutableLiveData: MutableLiveData<List<User>> = MutableLiveData()
+    //val readAllData: LiveData<List<User>> = userDao.getAll()
 
     private val retrofit: Retrofit = Retrofit.Builder()
         .baseUrl("https://jsonplaceholder.typicode.com")
@@ -21,24 +26,27 @@ class UserRepository() {
 
     private val service = retrofit.create(APIService::class.java)
 
-    fun getUsers(): MutableLiveData<List<User>> {
+    suspend fun getUsers(): List<User> {
+        //
+        val users = getDBUser()
+        withContext(Dispatchers.IO) {
+            users.let { userDB.userDao().insertAll(it) }
+        }
+        return users
+    }
 
+    private suspend fun getDBUser() = suspendCoroutine<List<User>> { continuation ->
         service.getAllUsers().enqueue(object : Callback<List<User>> {
             override fun onResponse(call: Call<List<User>>, response: Response<List<User>>) {
                 if (response.isSuccessful && response.body() != null) {
-                    mutableLiveData.value = (response.body())
+                    continuation.resume(response.body()!!)
                 }
             }
 
             override fun onFailure(call: Call<List<User>>, t: Throwable) {
-                t.printStackTrace()
+                continuation.resume(arrayListOf())
             }
         })
-        return mutableLiveData
-    }
-
-    fun addUsers(user: User) {
-
     }
 
 }
