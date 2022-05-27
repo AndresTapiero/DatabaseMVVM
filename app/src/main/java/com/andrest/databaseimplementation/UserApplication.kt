@@ -1,10 +1,9 @@
 package com.andrest.databaseimplementation
 
 import android.app.Application
-import android.util.Log
 import com.andrest.databaseimplementation.db.UserDB
 
-class UserApp : Application() {
+class UserApplication : Application() {
 
     lateinit var room: UserDB
     override fun onCreate() {

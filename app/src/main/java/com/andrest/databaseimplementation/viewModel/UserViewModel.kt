@@ -5,7 +5,7 @@ import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.andrest.databaseimplementation.UserApp
+import com.andrest.databaseimplementation.UserApplication
 import com.andrest.databaseimplementation.db.UserDB
 import com.andrest.databaseimplementation.models.User
 import com.andrest.databaseimplementation.repository.UserRepository
@@ -19,7 +19,7 @@ class UserViewModel(application: Application) : AndroidViewModel(application) {
 
     init {
         val userDao = UserDB.getDatabase(application).userDao()
-        userRepo = UserRepository(userDao, (application as UserApp).room)
+        userRepo = UserRepository(userDao, (application as UserApplication).room)
         viewModelScope.launch {
             userData.value = userRepo.getUsers()
         }

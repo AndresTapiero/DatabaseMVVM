@@ -27,10 +27,12 @@ class UserRepository(private val userDao: UserDao, private val userDB: UserDB) {
     private val service = retrofit.create(APIService::class.java)
 
     suspend fun getUsers(): List<User> {
-        //
         val users = getDBUser()
-        withContext(Dispatchers.IO) {
-            users.let { userDB.userDao().insertAll(it) }
+
+        if (users.isEmpty()) {
+            withContext(Dispatchers.IO) {
+                users.let { userDB.userDao().insertAll(it) }
+            }
         }
         return users
     }
