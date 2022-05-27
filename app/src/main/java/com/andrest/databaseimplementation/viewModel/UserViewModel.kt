@@ -1,39 +1,32 @@
 package com.andrest.databaseimplementation.viewModel
 
 import android.app.Application
-import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
+import com.andrest.databaseimplementation.UserApplication
+import com.andrest.databaseimplementation.db.UserDB
 import com.andrest.databaseimplementation.models.User
 import com.andrest.databaseimplementation.repository.UserRepository
+import kotlinx.coroutines.launch
 
 class UserViewModel(application: Application) : AndroidViewModel(application) {
 
-    var userData: LiveData<List<User>>
-    private var userRepo: UserRepository = UserRepository()
+    var userData: MutableLiveData<List<User>> = MutableLiveData<List<User>>()
+
+    private var userRepo: UserRepository
 
     init {
-        userData = userRepo.getUsers()
-    }
-
-    fun getPosts(): LiveData<List<User>> {
-        if (userData == null) {
-            Log.i("Andres", " Melosooo entre al log")
-            userData = userRepo.getUsers()
+        val userDao = UserDB.getDatabase(application).userDao()
+        userRepo = UserRepository(userDao, (application as UserApplication).room)
+        viewModelScope.launch {
+            userData.value = userRepo.getUsers()
         }
-        return userData
     }
 
     fun onClick(user: User) {
         Toast.makeText(getApplication(), "user ${user.id} ${user.name}", Toast.LENGTH_LONG).show()
     }
 
-
-/*    fun getUser(): LiveData<List<User?>?>? {
-        if (mutableLiveData == null) {
-            mutableLiveData = repository.service()
-        }
-        return mutableLiveData
-    }*/
 }

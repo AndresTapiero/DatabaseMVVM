@@ -1,10 +1,13 @@
 package com.andrest.databaseimplementation.models
 
-import com.google.gson.annotations.SerializedName
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 
+@Entity(tableName = "user")
 data class User(
-    @SerializedName("id") val id: Int,
-    @SerializedName("name") val name: String,
-    @SerializedName("email") val email: String,
-    @SerializedName("phone") val phone: String
-    )
+    @PrimaryKey(autoGenerate = true)
+    val id: Int,
+    val name: String,
+    val email: String,
+    val phone: String
+)

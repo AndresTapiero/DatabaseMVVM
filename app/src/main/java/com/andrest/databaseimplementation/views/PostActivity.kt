@@ -1,11 +1,11 @@
 package com.andrest.databaseimplementation.views
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.andrest.databaseimplementation.Adapters.PostAdapter
 import com.andrest.databaseimplementation.R
+import com.andrest.databaseimplementation.adapters.PostAdapter
 import com.andrest.databaseimplementation.databinding.ActivityPostBinding
 
 class PostActivity : AppCompatActivity() {

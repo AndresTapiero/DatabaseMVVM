@@ -6,7 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.andrest.databaseimplementation.Adapters.UserListAdapter
+import com.andrest.databaseimplementation.adapters.UserListAdapter
 import com.andrest.databaseimplementation.databinding.ActivityMainBinding
 import com.andrest.databaseimplementation.viewModel.UserViewModel
 
