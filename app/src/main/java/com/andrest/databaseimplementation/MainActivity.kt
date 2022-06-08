@@ -1,5 +1,6 @@
 package com.andrest.databaseimplementation
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -8,7 +9,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.andrest.databaseimplementation.adapters.UserListAdapter
 import com.andrest.databaseimplementation.databinding.ActivityMainBinding
+import com.andrest.databaseimplementation.models.User
 import com.andrest.databaseimplementation.viewModel.UserViewModel
+import com.andrest.databaseimplementation.views.PostActivity
 
 class MainActivity : AppCompatActivity() {
 
@@ -23,6 +26,7 @@ class MainActivity : AppCompatActivity() {
 
         val adapter = UserListAdapter {
             userViewModel.onClick(it)
+            launchPostActivity(it)
         }
         binding.recycler.adapter = adapter
         binding.recycler.layoutManager = LinearLayoutManager(this)
@@ -33,6 +37,15 @@ class MainActivity : AppCompatActivity() {
         }
         binding.progressBar.visibility = View.GONE
 
+    }
+
+    //TODO: Send all
+    private fun launchPostActivity(user: User) {
+        val intent = Intent(this, PostActivity::class.java)
+        intent.putExtra("name", user.name)
+        intent.putExtra("phone", user.phone)
+        intent.putExtra("email", user.email)
+        startActivity(intent)
     }
 
 }

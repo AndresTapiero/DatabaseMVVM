@@ -37,4 +37,9 @@ class PostAdapter : RecyclerView.Adapter<PostAdapter.ViewHolder>() {
 
     }
 
+    fun setData(post: List<Post>) {
+        this.postList = post
+        notifyDataSetChanged()
+    }
+
 }
