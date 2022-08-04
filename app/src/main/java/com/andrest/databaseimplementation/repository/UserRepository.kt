@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import com.andrest.databaseimplementation.api.APIService
 import com.andrest.databaseimplementation.dao.UserDao
 import com.andrest.databaseimplementation.db.UserDB
+import com.andrest.databaseimplementation.models.Post
 import com.andrest.databaseimplementation.models.User
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -17,7 +18,6 @@ import kotlin.coroutines.suspendCoroutine
 
 class UserRepository(private val userDao: UserDao, private val userDB: UserDB) {
     private val mutableLiveData: MutableLiveData<List<User>> = MutableLiveData()
-    //val readAllData: LiveData<List<User>> = userDao.getAll()
 
     private val retrofit: Retrofit = Retrofit.Builder()
         .baseUrl("https://jsonplaceholder.typicode.com")
@@ -35,6 +35,24 @@ class UserRepository(private val userDao: UserDao, private val userDB: UserDB) {
             }
         }
         return users
+    }
+
+    suspend fun getDataByUser(userid: Int): List<Post> {
+        return getPosts(userid)
+    }
+
+    private suspend fun getPosts(userid: Int) = suspendCoroutine<List<Post>> { continuation ->
+        service.getUserPosts(userid).enqueue(object : Callback<List<Post>> {
+            override fun onResponse(call: Call<List<Post>>, response: Response<List<Post>>) {
+                if (response.isSuccessful && response.body() != null) {
+                    continuation.resume(response.body()!!)
+                }
+            }
+
+            override fun onFailure(call: Call<List<Post>>, t: Throwable) {
+                continuation.resume(arrayListOf())
+            }
+        })
     }
 
     private suspend fun getDBUser() = suspendCoroutine<List<User>> { continuation ->

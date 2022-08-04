@@ -34,7 +34,7 @@
                     style="@style/TextAppearance.AppCompat.Title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Jhon doe"
+                    tools:text="Jhon doe"
                     android:textColor="@color/colorPrimary" />
 
                 <LinearLayout
@@ -58,7 +58,7 @@
                         style="@style/TextAppearance.AppCompat.Body1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="1-770-736-8031 x56442" />
+                        tools:text="1-770-736-8031 x56442" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -80,7 +80,7 @@
                         style="@style/TextAppearance.AppCompat.Body1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="jhondoe@email.com" />
+                        tools:text="jhondoe@email.com" />
                 </LinearLayout>
 
 
