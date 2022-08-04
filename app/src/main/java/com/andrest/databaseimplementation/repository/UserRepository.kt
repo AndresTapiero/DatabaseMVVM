@@ -6,6 +6,7 @@ import com.andrest.databaseimplementation.dao.UserDao
 import com.andrest.databaseimplementation.db.UserDB
 import com.andrest.databaseimplementation.models.Post
 import com.andrest.databaseimplementation.models.User
+import com.andrest.databaseimplementation.rest.EndPoints
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.Call
@@ -20,7 +21,7 @@ class UserRepository(private val userDao: UserDao, private val userDB: UserDB) {
     private val mutableLiveData: MutableLiveData<List<User>> = MutableLiveData()
 
     private val retrofit: Retrofit = Retrofit.Builder()
-        .baseUrl("https://jsonplaceholder.typicode.com")
+        .baseUrl(EndPoints.URL_BASE)
         .addConverterFactory(GsonConverterFactory.create())
         .build()
 

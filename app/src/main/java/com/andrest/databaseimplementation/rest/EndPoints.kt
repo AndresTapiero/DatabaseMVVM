@@ -1,7 +1,9 @@
 package com.andrest.databaseimplementation.rest
 
 class EndPoints {
-    val URL_BASE = "https://jsonplaceholder.typicode.com"
-    val GET_USERS = "/users"
-    val GET_POST_USER = "/posts?"
+    companion object {
+        const val URL_BASE = "https://jsonplaceholder.typicode.com"
+        const val GET_USERS = "/users"
+        const val GET_POST_USER = "/posts?"
+    }
 }

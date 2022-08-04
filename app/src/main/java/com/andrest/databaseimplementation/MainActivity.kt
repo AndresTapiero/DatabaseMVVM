@@ -3,7 +3,6 @@ package com.andrest.databaseimplementation
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
@@ -37,17 +36,17 @@ class MainActivity : AppCompatActivity(), OnClickListener {
 
     }
 
-    //TODO: Send all
     private fun launchPostActivity(user: User) {
         val intent = Intent(this, PostActivity::class.java)
-        intent.putExtra("name", user.name)
-        intent.putExtra("phone", user.phone)
-        intent.putExtra("email", user.email)
+        intent.putExtra(USER_KEY, user)
         startActivity(intent)
     }
 
     override fun onClick(user: User) {
-        Toast.makeText(this, "User id ${user.id}", Toast.LENGTH_LONG).show()
         launchPostActivity(user)
+    }
+
+    companion object {
+        const val USER_KEY = "user"
     }
 }

@@ -5,9 +5,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.andrest.databaseimplementation.MainActivity
 import com.andrest.databaseimplementation.R
 import com.andrest.databaseimplementation.adapters.PostAdapter
 import com.andrest.databaseimplementation.databinding.ActivityPostBinding
+import com.andrest.databaseimplementation.models.User
 import com.andrest.databaseimplementation.viewModel.PostViewModel
 
 class PostActivity : AppCompatActivity() {
@@ -24,25 +26,18 @@ class PostActivity : AppCompatActivity() {
         val adapter = PostAdapter()
         binding.rvPostsResults.adapter = adapter
         binding.rvPostsResults.layoutManager = LinearLayoutManager(this)
-        val userName = intent.getStringExtra("name")
-        val userPhone = intent.getStringExtra("phone")
-        val userEmail = intent.getStringExtra("email")
+        val user = intent.extras?.get(MainActivity.USER_KEY) as User
 
-        binding.name.text = userName
-        binding.phone.text = userPhone
-        binding.email.text = userEmail
+        binding.name.text = user.name
+        binding.phone.text = user.phone
+        binding.email.text = user.email
 
-        postViewModel.setId(2)
 
         postViewModel.dataByUser.observe(this) {
-            postViewModel.setId(2)
             adapter.setData(it)
         }
+        postViewModel.getDataById(user.id)
 
-
-/*        userViewModel.dataByUser.observe(this) {
-            adapter.setData(it)
-        }*/
     }
 
 
