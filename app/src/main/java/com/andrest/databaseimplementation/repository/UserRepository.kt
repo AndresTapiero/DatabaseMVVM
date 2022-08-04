@@ -45,7 +45,6 @@ class UserRepository(private val userDao: UserDao, private val userDB: UserDB) {
         service.getUserPosts(userid).enqueue(object : Callback<List<Post>> {
             override fun onResponse(call: Call<List<Post>>, response: Response<List<Post>>) {
                 if (response.isSuccessful && response.body() != null) {
-                    //Log.e("Andres", "response ${response.body()}")
                     continuation.resume(response.body()!!)
                 }
             }

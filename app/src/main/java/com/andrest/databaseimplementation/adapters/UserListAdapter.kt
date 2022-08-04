@@ -6,10 +6,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.andrest.databaseimplementation.R
 import com.andrest.databaseimplementation.databinding.UserListItemBinding
+import com.andrest.databaseimplementation.interfaces.OnClickListener
 import com.andrest.databaseimplementation.models.User
 
 
-class UserListAdapter(private val onClick: (User) -> Unit) :
+class UserListAdapter(private var listener: OnClickListener) :
     RecyclerView.Adapter<UserListAdapter.ViewHolder>() {
 
     private var userList = emptyList<User>()
@@ -18,25 +19,36 @@ class UserListAdapter(private val onClick: (User) -> Unit) :
         val view = LayoutInflater
             .from(parent.context)
             .inflate(R.layout.user_list_item, parent, false)
-        return ViewHolder(view, onClick)
+        return ViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val currentUser = userList[position]
-        holder.bind(currentUser)
+
+        with(holder) {
+            bind(currentUser)
+            setListener(currentUser)
+        }
     }
 
     override fun getItemCount(): Int = userList.size
 
-    class ViewHolder(view: View, private val listener: (User) -> Unit) :
+    inner class ViewHolder(view: View) :
         RecyclerView.ViewHolder(view) {
         private val binding = UserListItemBinding.bind(view)
 
         fun bind(currentUser: User) {
-            binding.name.text = currentUser.name
-            binding.phone.text = currentUser.phone
-            binding.email.text = currentUser.email
-            binding.btnViewPost.setOnClickListener { listener(currentUser) }
+            with(binding) {
+                name.text = currentUser.name
+                phone.text = currentUser.phone
+                email.text = currentUser.email
+            }
+        }
+
+        fun setListener(user: User) {
+            binding.btnViewPost.setOnClickListener {
+                listener.onClick(user)
+            }
         }
     }
 

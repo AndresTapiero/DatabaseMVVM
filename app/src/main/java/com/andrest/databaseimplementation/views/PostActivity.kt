@@ -8,17 +8,18 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.andrest.databaseimplementation.R
 import com.andrest.databaseimplementation.adapters.PostAdapter
 import com.andrest.databaseimplementation.databinding.ActivityPostBinding
-import com.andrest.databaseimplementation.viewModel.UserViewModel
+import com.andrest.databaseimplementation.viewModel.PostViewModel
 
 class PostActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityPostBinding
-    private lateinit var userViewModel: UserViewModel
+    private lateinit var postViewModel: PostViewModel
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_post)
-        userViewModel = ViewModelProvider(this)[UserViewModel::class.java]
+        postViewModel = ViewModelProvider(this)[PostViewModel::class.java]
 
         val adapter = PostAdapter()
         binding.rvPostsResults.adapter = adapter
@@ -31,8 +32,18 @@ class PostActivity : AppCompatActivity() {
         binding.phone.text = userPhone
         binding.email.text = userEmail
 
-        userViewModel.dataByUser.observe(this) {
+        postViewModel.setId(2)
+
+        postViewModel.dataByUser.observe(this) {
+            postViewModel.setId(2)
             adapter.setData(it)
         }
+
+
+/*        userViewModel.dataByUser.observe(this) {
+            adapter.setData(it)
+        }*/
     }
+
+
 }
