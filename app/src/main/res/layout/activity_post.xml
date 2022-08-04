@@ -116,6 +116,7 @@
                 android:id="@+id/rvPostsResults"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                tools:listitem="@layout/post_list_item"
                 android:layout_marginTop="@dimen/activity_vertical_margin" />
 
         </LinearLayout>

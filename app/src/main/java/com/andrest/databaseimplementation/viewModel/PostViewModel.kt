@@ -12,21 +12,18 @@ import kotlinx.coroutines.launch
 
 class PostViewModel(application: Application) : AndroidViewModel(application) {
 
-
     var dataByUser: MutableLiveData<List<Post>> = MutableLiveData<List<Post>>()
     private var userRepo: UserRepository
-    var userID = 0
 
     init {
         val userDao = UserDB.getDatabase(application).userDao()
         userRepo = UserRepository(userDao, (application as UserApplication).room)
-        viewModelScope.launch {
-            dataByUser.value = userRepo.getDataByUser(userID)
-        }
     }
 
-    fun setId(userid: Int) {
-        userID = userid
+    fun getDataById(userid: Int) {
+        viewModelScope.launch {
+            dataByUser.value = userRepo.getDataByUser(userid)
+        }
     }
 
 }
